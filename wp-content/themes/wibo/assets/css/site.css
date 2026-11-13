@@ -4,7 +4,7 @@
 @font-face{font-family:"Courgette";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/courgette-rdzen.woff2) format("woff2");unicode-range:U+20-7E,U+A0,U+A9,U+AB,U+B0,U+B7,U+BB,U+D3,U+D7,U+F3,U+2013-2014,U+2018-2019,U+201C-201E,U+2022,U+2026,U+20AC}
 @font-face{font-family:"Courgette";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/courgette-pl.woff2) format("woff2");unicode-range:U+104-107,U+118-119,U+141-144,U+15A-15B,U+179-17C}
 :root{
-  --granat:#293991;--granat-d:#1f2c75;--czerwien:#EE1D23;--zolc:#FFF100;
+  --granat:#293991;--granat-d:#1f2c75;--czerwien:#EE1D23;--czerwien-t:#CF1219;--zolc:#FFF100;
   --tusz:#221E1F;--tekst:#3a3a40;--szary:#F2F3F7;--linia:#E1E3EA;--bialy:#fff;--szary-t:#5b5d66;
   --hdr:68px;--wrap:min(1240px,calc(100% - 40px));
 }
@@ -20,7 +20,7 @@ h3{font-size:20px;font-weight:700}
 p{margin:0 0 1em}
 button{font:inherit}
 .wrap{width:var(--wrap);margin:0 auto}
-.dewiza{font-family:"Courgette",cursive;color:var(--czerwien);font-weight:400}
+.dewiza{font-family:"Courgette",cursive;color:var(--czerwien-t);font-weight:400}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skok{position:absolute;left:-9999px;top:8px;z-index:200;background:#fff;padding:10px 14px;border-radius:6px}
 .skok:focus{left:8px}
@@ -218,13 +218,13 @@ button{font:inherit}
 .okazja-bez{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:var(--szary)}
 .okazja-bez .iskra{width:64px;height:64px}
 .ok-tresc{padding:16px 18px 18px}
-.ok-typ{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--czerwien);margin:0 0 6px}
+.ok-typ{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--czerwien-t);margin:0 0 6px}
 .ok-typ .iskra{width:17px;height:17px}
 .ok-tyt{font-size:21px;margin:0 0 6px}
 .ok-tyt a{color:var(--tusz);text-decoration:none}
 .ok-tyt a:hover{color:var(--granat)}
 .cena{margin:0 0 8px;font-size:18px}
-.cena b{color:var(--czerwien);font-size:24px;font-weight:800}
+.cena b{color:var(--czerwien-t);font-size:24px;font-weight:800}
 .cena s{color:var(--szary-t);margin-left:6px}
 .ok-opis{font-size:15.5px;margin:0 0 8px}
 .ok-do{font-size:14px;color:var(--szary-t);margin:0}

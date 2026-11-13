@@ -65,6 +65,17 @@
     });
   }
 
+  /* kolejne zdjęcia galerii wczytywane dopiero, gdy ktoś zacznie ją oglądać */
+  function zaladuj(tor) {
+    if (tor.dataset.zal) return; tor.dataset.zal = '1';
+    [].forEach.call(tor.querySelectorAll('img[data-src]'), function (im) { if (im.dataset.srcset) im.srcset = im.dataset.srcset; im.src = im.dataset.src; im.removeAttribute('data-src'); im.removeAttribute('data-srcset'); });
+  }
+  function przyOgladaniu(kont, tor) {
+    var f = function () { zaladuj(tor); };
+    ['pointerdown', 'touchstart', 'mouseenter', 'focusin'].forEach(function (ev) { kont.addEventListener(ev, f, { passive: true, once: true }); });
+    tor.addEventListener('scroll', f, { passive: true, once: true });
+  }
+
   /* strzałki do toru (komputer) */
   function strzalki(kont, tor, krok) {
     var l = d.createElement('button'), p = d.createElement('button');
@@ -80,6 +91,7 @@
   [].forEach.call(d.querySelectorAll('[data-karuzela]'), function (k) {
     var tor = k.querySelector('.kar-tor'), n = tor.children.length, licz = k.querySelector('.kar-licz');
     if (n < 2) return;
+    przyOgladaniu(k, tor);
     tor.setAttribute('tabindex', '0'); tor.setAttribute('aria-label', 'Zdjęcia: ' + (k.getAttribute('data-nazwa') || '') + ', przesuń w bok');
     ciagnij(tor, true);
     var stan = strzalki(k, tor, function () { return tor.clientWidth; });
@@ -93,6 +105,8 @@
   [].forEach.call(d.querySelectorAll('[data-galeria]'), function (g) {
     var ps = g.querySelector('.pasek'), tor = g.querySelector('.pasek-tor'), bt = tor.querySelectorAll('button'), lic = g.querySelector('.licznik'), n = bt.length;
     ciagnij(tor, false);
+    przyOgladaniu(g, tor);
+    if ('IntersectionObserver' in window) { var ob = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { ob.disconnect(); setTimeout(function () { zaladuj(tor); }, 2500); } }); ob.observe(tor); }
     if (n < 2) return;
     tor.setAttribute('tabindex', '0'); tor.setAttribute('aria-label', 'Zdjęcia: ' + (g.getAttribute('data-nazwa') || '') + ', przesuń w bok');
     var stan = strzalki(ps, tor, function () { return tor.clientWidth * 0.8; });
@@ -193,8 +207,14 @@
   }
   function stanMapy() { if (!mapa || mapa.querySelector('iframe')) return; if (zgoda() === 'nie') mapa.querySelector('.mapa-zastep').hidden = false; else wlaczMape(); }
   if (mapa) {
-    if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); stanMapy(); } }, { rootMargin: '300px 0px' }); io.observe(mapa); }
-    else stanMapy();
+    var obserwuj = function () {
+      if (obserwuj.raz) return; obserwuj.raz = 1;
+      if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); stanMapy(); } }, { rootMargin: '300px 0px' }); io.observe(mapa); }
+      else stanMapy();
+    };
+    /* mapa nie wczytuje się razem ze stroną: po pierwszym przewinięciu albo chwilę po załadowaniu */
+    window.addEventListener('scroll', obserwuj, { passive: true, once: true });
+    window.addEventListener('load', function () { setTimeout(obserwuj, 3000); });
     mapa.addEventListener('click', function (e) { if (e.target.closest('[data-mapa-pokaz]')) wlaczMape(); });
   }
   if (zgoda() === 'tak') statystyki();
