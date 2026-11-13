@@ -367,7 +367,7 @@ button{font:inherit}
 }
 @media (min-width:861px) and (max-height:820px){
   .hero h1{font-size:clamp(32px,3vw,46px)}
-  .hero-cta{margin:22px 0}
+  .hero-cta{margin:24px 0}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important}}
 .okazja-jedna .ok-do{margin-bottom:14px}
