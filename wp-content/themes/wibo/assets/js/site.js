@@ -125,27 +125,57 @@
     ps.addEventListener('mouseenter', stan, { once: true });
   });
 
-  /* pokaz zdjęć w pierwszym ekranie: zmienia się sam, przesuwany palcem i myszą */
-  var pk = d.querySelector('.pokaz');
+  /* pokaz zdjęć w pierwszym ekranie: przenikanie z błyskiem i powolny najazd, zmienia się sam, przesuwany palcem i myszą */
+  var bezRuchu = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero = d.querySelector('.hero'), pk = hero && hero.querySelector('.pokaz');
   if (pk) {
-    var tor = pk.querySelector('.pokaz-tor'), n = tor.children.length, ak = 0, kr = pk.querySelectorAll('.kropki button'), tm = 0;
-    var bezRuchu = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var start = function () { clearInterval(tm); if (!bezRuchu && n > 1) tm = setInterval(function () { if (!d.hidden) idz(ak + 1); }, 5500); };
+    var sl = pk.querySelectorAll('figure'), n = sl.length, ak = 0, kr = hero.querySelectorAll('.kropki button'), tm = 0, tw = 0;
+    var wczytaj = function (f) { var im = f && f.querySelector('img[data-src]'); if (!im) return; if (im.dataset.srcset) im.srcset = im.dataset.srcset; im.src = im.dataset.src; im.removeAttribute('data-src'); im.removeAttribute('data-srcset'); };
+    var start = function () { clearInterval(tm); if (!bezRuchu && n > 1) tm = setInterval(function () { if (!d.hidden) idz(ak + 1); }, 6500); };
     var idz = function (k) {
-      ak = (k + n) % n;
-      var im = tor.children[ak].querySelector('img'); if (im && im.loading === 'lazy') im.loading = 'eager';
-      tor.style.transform = 'translateX(' + (-100 * ak) + '%)';
+      k = (k + n) % n; if (k === ak) return;
+      var stary = sl[ak], nowy = sl[k];
+      wczytaj(nowy); wczytaj(sl[(k + 1) % n]);
+      clearTimeout(tw);
+      [].forEach.call(sl, function (f) { if (f !== stary) f.classList.remove('wych', 'wchodzi'); });
+      stary.classList.remove('akt', 'wchodzi'); stary.classList.add('wych');
+      nowy.classList.add('akt', 'wchodzi');
+      tw = setTimeout(function () { stary.classList.remove('wych'); nowy.classList.remove('wchodzi'); }, 1400);
+      ak = k;
       for (var j = 0; j < kr.length; j++) kr[j].setAttribute('aria-current', j === ak ? 'true' : 'false');
       start();
     };
     [].forEach.call(kr, function (b, j) { b.addEventListener('click', function () { idz(j); }); });
     var x0 = null, y0 = 0;
-    pk.addEventListener('pointerdown', function (e) { x0 = e.clientX; y0 = e.clientY; });
-    pk.addEventListener('pointerup', function (e) { if (x0 === null) return; var dx = e.clientX - x0, dy = e.clientY - y0; if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) idz(ak + (dx < 0 ? 1 : -1)); x0 = null; });
-    pk.addEventListener('pointercancel', function () { x0 = null; });
+    hero.addEventListener('pointerdown', function (e) { if (e.target.closest('a,button')) return; x0 = e.clientX; y0 = e.clientY; });
+    hero.addEventListener('pointerup', function (e) { if (x0 === null) return; var dx = e.clientX - x0, dy = e.clientY - y0; if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) idz(ak + (dx < 0 ? 1 : -1)); x0 = null; });
+    hero.addEventListener('pointercancel', function () { x0 = null; });
     pk.addEventListener('dragstart', function (e) { e.preventDefault(); });
-    /* kolejne zdjęcia wczytywane dopiero po załadowaniu strony */
-    window.addEventListener('load', function () { setTimeout(function () { var im = tor.children[1] && tor.children[1].querySelector('img'); if (im) im.loading = 'eager'; }, 1500); start(); });
+    /* kolejne zdjęcia wczytywane dopiero po załadowaniu strony (nie konkurują z pierwszym) */
+    window.addEventListener('load', function () { setTimeout(function () { wczytaj(sl[1]); }, 1200); start(); });
+  }
+
+  /* płynne pojawianie się napisów i zdjęć przy przewijaniu: tylko elementy jeszcze poza ekranem (bez mrugania i przesunięć układu) */
+  if (!bezRuchu && 'IntersectionObserver' in window) {
+    var cele = d.querySelectorAll('main .sek .sep, main .wstep, .pokoj, .atut, .salon-foto, .salon > div, .okazja, .okazja-karta, .dzial-karta, .galeria, .dzial-opis > *, .producenci-blok, .nl-txt, .nl-form, .dwie > div, .pusta > div, .kontakt > *, .producenci, .okazje-linki, .sek-cta .wstep, .sek-cta .cta-rzad, .spis li');
+    var pierwszy = new WeakMap();
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        var el = e.target;
+        if (!pierwszy.has(el)) {
+          pierwszy.set(el, 1);
+          if (e.isIntersecting) { io.unobserve(el); return; }
+          var i = 0, s = el; while ((s = s.previousElementSibling)) { if (s.classList.contains('ods')) i++; }
+          el.style.setProperty('--d', Math.min(i, 6)); el.classList.add('ods');
+          return;
+        }
+        if (e.isIntersecting) {
+          io.unobserve(el); el.classList.add('widac');
+          setTimeout(function () { el.classList.remove('ods', 'widac'); el.style.removeProperty('--d'); }, 1900);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    [].forEach.call(cele, function (el) { if (!el.closest('.hero')) io.observe(el); });
   }
 
   /* dolny pasek na telefonie: po przewinięciu za główny przycisk */
@@ -185,6 +215,32 @@
         .then(function (r) { return r.json(); })
         .then(function (j) { kom(j.msg || 'Dziękujemy.', j.ok ? 'ok' : 'blad'); if (j.ok) f.reset(); })
         .catch(function () { kom('Nie udało się wysłać zapytania. Proszę zadzwonić albo spróbować ponownie.', 'blad'); })
+        .then(function () { b.disabled = false; });
+    });
+  }
+
+  /* newsletter: zapis bez przeładowania strony, świeży znacznik czasu przy pierwszym kliknięciu */
+  var nf = d.getElementById('nl-form'), ni = d.getElementById('nl-info');
+  if (nf) {
+    nf.querySelector('[name="zrodlo"]').value = location.href.split('#')[0];
+    var nlKom = function (t) { ni.textContent = t; };
+    nf.addEventListener('focusin', function () {
+      if (nf.dataset.odsw || !window.WB || !WB.ajax) return; nf.dataset.odsw = '1';
+      fetch(WB.ajax + '?action=wb_token', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) { if (j && j.t) nf.querySelector('[name="t"]').value = j.t; }).catch(function () {});
+    });
+    nf.addEventListener('submit', function (e) {
+      var em = nf.querySelector('[name="email"]'), zg = nf.querySelector('[name="zgoda"]');
+      if (!em.value.trim() || !em.checkValidity()) { e.preventDefault(); em.focus(); nlKom('Proszę wpisać poprawny adres e-mail.'); return; }
+      if (!zg.checked) { e.preventDefault(); zg.focus(); nlKom('Proszę zaznaczyć zgodę na informacje o promocjach.'); return; }
+      if (nf.dataset.test) { e.preventDefault(); nlKom(nf.dataset.test); return; }
+      if (!window.fetch || !window.FormData || !window.WB || !WB.ajax) return;
+      e.preventDefault();
+      var b = nf.querySelector('button[type="submit"]'); b.disabled = true; nlKom('Zapisywanie...');
+      var dane = new FormData(nf); dane.append('ajax', '1');
+      fetch(WB.ajax, { method: 'POST', body: dane, credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { nlKom(j.msg || 'Dziękujemy.'); if (j.ok) nf.reset(); })
+        .catch(function () { nlKom('Nie udało się zapisać. Proszę spróbować ponownie.'); })
         .then(function () { b.disabled = false; });
     });
   }
