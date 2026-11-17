@@ -79,8 +79,8 @@ button{font:inherit}
 .pokaz figure.akt{opacity:1;z-index:2}
 .pokaz figure.wych{opacity:1;z-index:1}
 .pokaz img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 50%);-webkit-user-drag:none;transform-origin:var(--op,50% 50%)}
-.pokaz .akt img,.pokaz .wych img{animation:kb 11s linear both}
-.pokaz .wchodzi img{animation:kb 11s linear both,blysk 1.3s ease-out both}
+.pokaz.gra .akt img,.pokaz.gra .wych img{animation:kb 11s linear both}
+.pokaz.gra .wchodzi img{animation:kb 11s linear both,blysk 1.3s ease-out both}
 .pokaz figure:nth-child(2n) img{transform-origin:30% 40%}
 @keyframes kb{from{transform:scale(1.001)}to{transform:scale(1.09)}}
 @keyframes blysk{0%{filter:brightness(1.55) saturate(.7)}100%{filter:none}}
@@ -99,9 +99,9 @@ button{font:inherit}
 .kropki button::before{content:"";width:11px;height:11px;border-radius:2px;transform:rotate(45deg);background:rgba(255,255,255,.45);transition:background .3s,transform .3s}
 .kropki button[aria-current="true"]::before{background:var(--zolc);transform:rotate(45deg) scale(1.3)}
 /* wejście tekstu pierwszego ekranu (samo CSS, bez czekania na skrypt) */
-.wej{animation:wej .9s var(--ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms)}
+.wej{animation:wej .7s var(--ease) both;animation-delay:calc(var(--d,0) * 60ms + 60ms)}
 @keyframes wej{from{opacity:.02;transform:translateY(26px)}to{opacity:1;transform:none}}
-.pod-gl .wrap>*{animation:wej .9s var(--ease) both}
+.pod-gl .wrap>*{animation:wej .7s var(--ease) both}
 .pod-gl .wrap>:nth-child(2){animation-delay:.09s}.pod-gl .wrap>:nth-child(3){animation-delay:.18s}.pod-gl .wrap>:nth-child(4){animation-delay:.27s}
 /* pojawianie się przy przewijaniu (klasy nadaje skrypt tylko elementom poza ekranem) */
 .ods{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--d,0) * 85ms)}

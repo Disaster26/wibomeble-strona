@@ -152,7 +152,7 @@
     hero.addEventListener('pointercancel', function () { x0 = null; });
     pk.addEventListener('dragstart', function (e) { e.preventDefault(); });
     /* kolejne zdjęcia wczytywane dopiero po załadowaniu strony (nie konkurują z pierwszym) */
-    window.addEventListener('load', function () { setTimeout(function () { wczytaj(sl[1]); }, 1200); start(); });
+    window.addEventListener('load', function () { if (!bezRuchu) pk.classList.add('gra'); setTimeout(function () { wczytaj(sl[1]); }, 1200); start(); });
   }
 
   /* płynne pojawianie się napisów i zdjęć przy przewijaniu: tylko elementy jeszcze poza ekranem (bez mrugania i przesunięć układu) */
