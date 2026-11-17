@@ -415,3 +415,4 @@ button{font:inherit}
   .nl-rzad{flex-direction:column}
 }
 @media (min-width:2000px){body{font-size:18.5px}.pokoje{gap:24px}.pokoj span{font-size:17.5px;padding:16px 18px}}
+@media (max-width:860px){.wej,.pod-gl .wrap>*{animation:none}}
