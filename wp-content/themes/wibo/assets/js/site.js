@@ -175,7 +175,10 @@
         }
       });
     }, { rootMargin: '0px 0px -8% 0px' });
-    [].forEach.call(cele, function (el) { if (!el.closest('.hero')) io.observe(el); });
+    var odsl = function () { [].forEach.call(cele, function (el) { if (!el.closest('.hero')) io.observe(el); }); };
+    /* po wczytaniu strony i w wolnej chwili - nie opóźnia pierwszego ekranu */
+    var poLoad = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(odsl, { timeout: 1500 }); };
+    if (d.readyState === 'complete') poLoad(); else window.addEventListener('load', poLoad);
   }
 
   /* dolny pasek na telefonie: po przewinięciu za główny przycisk */
