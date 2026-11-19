@@ -416,3 +416,21 @@ button{font:inherit}
 }
 @media (min-width:2000px){body{font-size:18.5px}.pokoje{gap:24px}.pokoj span{font-size:17.5px;padding:16px 18px}}
 @media (max-width:860px){.wej,.pod-gl .wrap>*{animation:none}}
+/* 19.11 (prośba właściciela): dewiza przy logo, duże zaproszenie pismem Courgette jak na starej stronie, H1 z frazą lokalną nad działami, Facebook */
+.hdr-dewiza{margin:0;font-size:clamp(18px,1.35vw,25px);line-height:1.2;white-space:nowrap;flex:none}
+.sep .h1-sek{margin:0;font-size:clamp(22px,1.9vw,36px);line-height:1.15}
+.hero .lead-duzy{font-family:"Courgette",cursive;font-weight:400;font-size:clamp(32px,3.15vw,64px);line-height:1.28;margin:0;color:#fff;max-width:none;text-shadow:0 2px 22px rgba(6,8,20,.55),0 1px 3px rgba(6,8,20,.45);text-wrap:pretty}
+.lead-duzy span{display:block}
+.lead-duzy span+span{margin-top:.22em;color:#f3f4fa}
+.hero:has(.lead-duzy) .pokaz::after{background:linear-gradient(90deg,rgba(11,13,26,.72) 0,rgba(11,13,26,.42) 40%,rgba(11,13,26,.12) 75%,rgba(11,13,26,0) 100%),linear-gradient(0deg,rgba(11,13,26,.8) 0,rgba(11,13,26,.45) 30%,rgba(11,13,26,0) 62%)}
+.fb-link{display:inline-flex;align-items:center;gap:8px}
+.fb-link svg{width:20px;height:20px;flex:none;color:#1877F2}
+.stopka .fb-link svg{color:#fff}
+@media (min-width:861px) and (max-height:820px){.hero .lead-duzy{font-size:clamp(28px,2.6vw,48px)}}
+@media (max-width:1080px){.hdr-dewiza{font-size:18px}}
+@media (max-width:860px){
+  .hero .lead-duzy{font-size:clamp(21px,3.2svh,27px);line-height:1.32;text-shadow:none}
+  .lead-duzy span+span{margin-top:.3em}
+  .hero:has(.lead-duzy) .pokaz::after{background:linear-gradient(0deg,#18215a 0,rgba(24,33,90,0) 26%)}
+}
+@media (max-width:400px){.hdr-dewiza{font-size:15.5px}.logo svg{width:76px;height:39px}.hdr .wrap{gap:8px}.tel-ik,.burger{width:42px;height:42px}}
