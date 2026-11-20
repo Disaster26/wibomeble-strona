@@ -1,0 +1,25 @@
+# WIBO meble - salon meblowy w Łukowie
+
+> Salon meblowy WIBO (Firma Handlowa „WIBO” Witold Borkowski), ul. Przemysłowa 4, 21-400 Łuków. Meble do całego domu od polskich producentów, dowóz gratis, montaż, zakupy na raty.
+
+- Telefon: 25 797 23 39, 790 850 900
+- E-mail: wibo75@wp.pl
+- Godziny: pon-pt 9:00-18:00; sob 9:00-14:00
+
+## Oferta
+- [Meble tapicerowane](https://disaster26.github.io/wibomeble-strona/oferta/meble-tapicerowane/)
+- [Meble młodzieżowe](https://disaster26.github.io/wibomeble-strona/oferta/meble-mlodziezowe/)
+- [Meble systemowe](https://disaster26.github.io/wibomeble-strona/oferta/meble-systemowe/)
+- [Sypialnie](https://disaster26.github.io/wibomeble-strona/oferta/sypialnie/)
+- [Stoły i krzesła](https://disaster26.github.io/wibomeble-strona/oferta/stoly-i-krzesla/)
+- [Kuchnie](https://disaster26.github.io/wibomeble-strona/oferta/kuchnie/)
+- [Meble na zamówienie](https://disaster26.github.io/wibomeble-strona/oferta/meble-na-zamowienie/)
+- [Szafy i przedpokoje](https://disaster26.github.io/wibomeble-strona/oferta/szafy-i-przedpokoje/)
+- [Łoża tapicerowane](https://disaster26.github.io/wibomeble-strona/oferta/loza-tapicerowane/)
+- [Materace](https://disaster26.github.io/wibomeble-strona/oferta/materace/)
+
+## Strony
+- [Promocje](https://disaster26.github.io/wibomeble-strona/promocje/)
+- [Wyprzedaże](https://disaster26.github.io/wibomeble-strona/wyprzedaze/)
+- [O nas](https://disaster26.github.io/wibomeble-strona/o-nas/)
+- [Kontakt](https://disaster26.github.io/wibomeble-strona/kontakt/)
