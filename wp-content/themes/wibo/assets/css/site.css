@@ -473,3 +473,4 @@ button{font:inherit}
   .bw-cta{clear:both;padding-top:4px}
   .bw-cta .btn{flex:1 1 auto}
 }
+@media (min-width:561px) and (max-width:860px){.hero:has(.hero-panel) .pokaz{max-height:none}}
