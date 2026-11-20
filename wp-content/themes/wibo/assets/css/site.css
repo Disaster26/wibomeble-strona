@@ -438,7 +438,7 @@ button{font:inherit}
 /* 20.11 (prośba właściciela): zaproszenie w dwóch liniach na małym tle tylko pod tekstem, niżej; zdjęcia pokazu bez przyciemnienia; bez faktów pod przyciskami; Black Week */
 .hero:has(.hero-panel) .pokaz::after{background:none}
 .hero:has(.hero-panel) .hero-txt{padding:0 0 clamp(26px,4.2svh,60px)}
-.hero-txt>.hero-panel{display:block;width:fit-content;max-width:min(1180px,100%);padding:clamp(14px,1.25vw,24px) clamp(18px,1.7vw,32px);border-radius:14px;background:rgba(12,15,34,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hero-txt>.hero-panel{display:block;width:fit-content;max-width:min(1440px,100%);padding:clamp(14px,1.25vw,24px) clamp(18px,1.7vw,32px);border-radius:14px;background:rgba(12,15,34,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .hero .hero-panel .lead-duzy{font-family:inherit;font-size:inherit;line-height:1.2;text-shadow:none}
 .hero-panel .lead-duzy span:first-child{font-family:"Courgette",cursive;font-size:clamp(26px,2.3vw,50px);line-height:1.22;color:#fff}
 .hero-panel .lead-duzy span+span{font-size:clamp(15px,1.08vw,22px);line-height:1.4;margin-top:.5em;color:#eef0f8;font-weight:500}
